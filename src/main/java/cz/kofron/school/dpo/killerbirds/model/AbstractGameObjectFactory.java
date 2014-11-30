@@ -1,6 +1,6 @@
 package cz.kofron.school.dpo.killerbirds.model;
 
-import cz.kofron.school.dpo.killerbirds.model.objects.Cannon;
+import cz.kofron.school.dpo.killerbirds.model.objects.cannon.Cannon;
 import cz.kofron.school.dpo.killerbirds.model.objects.Collision;
 import cz.kofron.school.dpo.killerbirds.model.objects.Enemy;
 import cz.kofron.school.dpo.killerbirds.model.objects.EnemyType;

@@ -15,6 +15,7 @@ public class Renderer implements LwjglUpdateListener
 	private ArrayList<GraphicObject> sprites = new ArrayList<>();
 	private ArrayList<GraphicObject> newSprites = new ArrayList<>();
 	private ArrayList<GraphicObject> spritesToDelete = new ArrayList<>();
+	private ArrayList<GameObject> objectsNotRemovedYet = new ArrayList<>();
 
 	public void addSprite(GraphicObject graphicObject)
 	{
@@ -32,17 +33,42 @@ public class Renderer implements LwjglUpdateListener
 		}
 	}
 
+	private void tryRemovedLater()
+	{
+		ArrayList<GameObject> notRemovedLaterAgain = new ArrayList<>();
+
+		for (GameObject gameObject : objectsNotRemovedYet)
+		{
+			if(!tryRemoveByObject(gameObject))
+			{
+				notRemovedLaterAgain.add(gameObject);
+			}
+		}
+
+		objectsNotRemovedYet = notRemovedLaterAgain;
+	}
+
+	private boolean tryRemoveByObject(GameObject gameObject)
+	{
+		for (GraphicObject graphicObject : sprites)
+		{
+			if (graphicObject.getGameObject().equals(gameObject))
+			{
+				spritesToDelete.add(graphicObject);
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public void removeSpriteByObject(GameObject gameObject)
 	{
 		synchronized (sprites)
 		{
-			for (GraphicObject graphicObject : sprites)
+			tryRemovedLater();
+			if(!tryRemoveByObject(gameObject))
 			{
-				if (graphicObject.getGameObject() == gameObject)
-				{
-					spritesToDelete.add(graphicObject);
-					break;
-				}
+				objectsNotRemovedYet.add(gameObject);
 			}
 		}
 	}
@@ -74,6 +100,7 @@ public class Renderer implements LwjglUpdateListener
 			{
 				sprite.getSprite().render(sprite.getGameObject());
 			}
+
 			if (spritesToDelete.size() > 0)
 			{
 				ArrayList<GraphicObject> notRemovedSprites = new ArrayList<>();

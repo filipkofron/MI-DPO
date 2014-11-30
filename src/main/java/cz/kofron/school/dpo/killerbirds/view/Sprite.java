@@ -19,13 +19,9 @@ import cz.kofron.school.dpo.killerbirds.model.objects.GameObject;
 /**
  * @author kofee
  */
-public class Sprite extends GLObject
+public class Sprite extends TexturedGLObject
 {
-	private int texId;
-	private int texX, texY;
-	float screenWidth, screenHeight;
 	private String textureName;
-	private int offsetLoc;
 	private int references = 0;
 	private static HashMap<String, Sprite> spriteCache = new HashMap<>();
 
@@ -67,29 +63,26 @@ public class Sprite extends GLObject
 	};
 
 	@Override
+	protected void setupTexture()
+	{
+		texId = ImageManager.getImage(textureName);
+		texX = ImageManager.getX(textureName);
+		texY = ImageManager.getY(textureName);
+	}
+
+	@Override
 	public void onInitializeGL(float screenWidth, float screenHeight)
 	{
 		if(references == 0)
 		{
-			texId = ImageManager.getImage(textureName);
-			texX = ImageManager.getX(textureName);
-			texY = ImageManager.getY(textureName);
-
-			this.screenWidth = screenWidth;
-			this.screenHeight = screenHeight;
-
-			offsetLoc = GL20.glGetUniformLocation(ShaderHelper.getProgramShader(), "uni_offset");
-
-			float ratioX = texX / screenWidth;
-			float ratioY = texY / screenHeight;
-			for (int i = 0; i < spriteVertices.length / 3; i++)
-			{
-				spriteVertices[i * 3] *= ratioX;
-				spriteVertices[i * 3 + 1] *= ratioY;
-			}
-			setupGL(spriteVertices, spriteTextureCoords);
+			super.onInitializeGL(screenWidth, screenHeight);
 		}
 		references++;
+	}
+
+	public void render(GameObject gameObject)
+	{
+		render(gameObject.getMovementProperty().posX, gameObject.getMovementProperty().posY);
 	}
 
 	@Override
@@ -97,56 +90,12 @@ public class Sprite extends GLObject
 	{
 		if(references == 1)
 		{
-			destroyGL();
+			super.onDestroy();
 			spriteCache.remove(textureName);
 		}
 		if(references > 0)
 		{
 			references--;
 		}
-	}
-
-	public void render(GameObject gameObject)
-	{
-		GL20.glUseProgram(ShaderHelper.getProgramShader());
-
-
-		// Mac OS X has terribly broken OpenGL ..
-		if(MacOSXHelper.isMac())
-		{
-			APPLEVertexArrayObject.glBindVertexArrayAPPLE(vertexArrayObjectId);;
-		}
-		else
-		{
-			GL30.glBindVertexArray(vertexArrayObjectId);
-		}
-
-		GL20.glEnableVertexAttribArray(0);
-		GL20.glEnableVertexAttribArray(1);
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vertexBufferObjectId);
-
-		GL13.glActiveTexture(GL13.GL_TEXTURE0);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texId);
-
-		GL20.glUniform2f(offsetLoc, gameObject.getMovementProperty().posX / (screenWidth / 2.0f),
-				gameObject.getMovementProperty().posY /  (screenHeight / 2.0f));
-
-		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, vertexCount);
-
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
-		GL20.glDisableVertexAttribArray(0);
-		GL20.glDisableVertexAttribArray(1);
-
-		// Mac OS X has terribly broken OpenGL ..
-		if(MacOSXHelper.isMac())
-		{
-			APPLEVertexArrayObject.glBindVertexArrayAPPLE(0);
-		}
-		else
-		{
-			GL30.glBindVertexArray(0);
-		}
-
-		GL20.glUseProgram(0);
 	}
 }

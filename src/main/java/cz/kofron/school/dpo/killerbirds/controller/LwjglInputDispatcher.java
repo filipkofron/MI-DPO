@@ -60,5 +60,12 @@ public class LwjglInputDispatcher implements LwjglUpdateListener
 				listener.onPressed(Key.RIGHT);
 			}
 		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_M))
+		{
+			for (KeyboardListener listener : listeners)
+			{
+				listener.onPressed(Key.M);
+			}
+		}
 	}
 }

@@ -72,7 +72,16 @@ public class View
 		}
 		finally
 		{
-			System.exit(1);
+			new Thread(() -> {
+				try
+				{
+					Thread.sleep(2000);
+				} catch (InterruptedException e)
+				{
+					e.printStackTrace();
+				}
+				System.exit(1);
+			}).start();
 		}
 	}
 

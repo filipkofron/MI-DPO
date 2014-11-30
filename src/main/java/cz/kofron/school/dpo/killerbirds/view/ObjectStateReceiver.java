@@ -16,13 +16,13 @@ public class ObjectStateReceiver implements ObjectStateListener
 	}
 
 	@Override
-	public void onObjectAdded(GameObject gameObject)
+	public synchronized void onObjectAdded(GameObject gameObject)
 	{
 		view.getRenderer().addSprite(new GraphicObject(gameObject));
 	}
 
 	@Override
-	public void onObjectRemoved(GameObject gameObject)
+	public synchronized void onObjectRemoved(GameObject gameObject)
 	{
 		view.getRenderer().removeSpriteByObject(gameObject);
 	}

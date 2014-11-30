@@ -1,3 +1,5 @@
+#version 150
+
 //the position of the vertex as specified by our renderer
 attribute vec3 in_vertex;
 attribute vec2 in_texCoord;

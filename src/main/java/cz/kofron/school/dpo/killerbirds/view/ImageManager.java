@@ -51,7 +51,7 @@ public class ImageManager
 	}
 
 	private static final int BYTES_PER_PIXEL = 4;
-	private static int loadTexture(BufferedImage image){
+	public static int loadTexture(BufferedImage image){
 
 		int[] pixels = new int[image.getWidth() * image.getHeight()];
 		image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
@@ -89,6 +89,7 @@ public class ImageManager
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, image.getWidth(), image.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
 
 		//Return the texture ID so we can bind it later again
+
 		return textureID;
 	}
 

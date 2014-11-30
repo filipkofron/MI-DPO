@@ -1,6 +1,6 @@
 package cz.kofron.school.dpo.killerbirds.model;
 
-import cz.kofron.school.dpo.killerbirds.model.objects.Cannon;
+import cz.kofron.school.dpo.killerbirds.model.objects.cannon.Cannon;
 import cz.kofron.school.dpo.killerbirds.model.objects.collision.Collider;
 import cz.kofron.school.dpo.killerbirds.model.objects.collision.CollisionCleaner;
 
@@ -15,7 +15,7 @@ public class Model
 	private ObjectPool objectPool = new ObjectPool();
 	private GameTimer timer = null;
 	private Collider collider = new Collider();
-	private EnemySpawner enemySpawner = new EnemySpawner();
+	private EnemySpawner enemySpawner = null;
 	private CollisionCleaner collisionCleaner = new CollisionCleaner();
 	private AbstractGameObjectFactory gameObjectFactory;
 
@@ -35,9 +35,11 @@ public class Model
 		{
 			case SIMPLE:
 				gameObjectFactory = new SimpleGameObjectFactory();
+				enemySpawner = new ModerateEnemySpawner();
 				break;
 			case REALISTIC:
 				gameObjectFactory = new RealisticGameObjectFactory();
+				enemySpawner = new InsaneEnemySpawner();
 				break;
 			default:
 		}

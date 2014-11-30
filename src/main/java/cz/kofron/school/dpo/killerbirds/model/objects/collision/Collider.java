@@ -69,8 +69,8 @@ public class Collider implements GameUpdateListener
 			MovementProperty movementProperty = new MovementProperty();
 			movementProperty.posX = pair.a.getMovementProperty().posX;
 			movementProperty.posY = pair.a.getMovementProperty().posY;
-			movementProperty.speedX = pair.a.getMovementProperty().speedX + pair.b.getMovementProperty().speedX;
-			movementProperty.speedY = pair.a.getMovementProperty().speedY + pair.b.getMovementProperty().speedY;
+			movementProperty.speedX = 2.0f * pair.b.getMovementProperty().speedX - pair.a.getMovementProperty().speedX;
+			movementProperty.speedY = 2.0f * pair.b.getMovementProperty().speedY - pair.a.getMovementProperty().speedY;
 
 			objectPool.addObject(
 						KillerBirds.model.getGameObjectFactory().createCollision(

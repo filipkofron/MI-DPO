@@ -1,6 +1,7 @@
 package cz.kofron.school.dpo.killerbirds.model.objects.movement;
 
 import cz.kofron.school.dpo.killerbirds.model.Model;
+import cz.kofron.school.dpo.killerbirds.model.objects.Enemy;
 import cz.kofron.school.dpo.killerbirds.model.objects.GameObject;
 
 /**
@@ -23,5 +24,11 @@ public class SimpleMovementStrategyStrategy extends GravityMovementStrategy
 		movementProperty.speedY = objProp.speedY - timeDelta * 40.0f;
 
 		gameObject.setMovementProperty(movementProperty);
+	}
+
+	@Override
+	public void visit(Enemy enemy)
+	{
+		// do nothing, enemies don't move around
 	}
 }

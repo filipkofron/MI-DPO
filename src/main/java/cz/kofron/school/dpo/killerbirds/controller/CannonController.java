@@ -5,7 +5,7 @@ import java.util.List;
 import cz.kofron.school.dpo.killerbirds.KillerBirds;
 import cz.kofron.school.dpo.killerbirds.model.objects.GameObject;
 import cz.kofron.school.dpo.killerbirds.model.Model;
-import cz.kofron.school.dpo.killerbirds.model.objects.Cannon;
+import cz.kofron.school.dpo.killerbirds.model.objects.cannon.Cannon;
 
 /**
  * Created by kofee on 21.10.14.
@@ -53,6 +53,11 @@ public class CannonController implements KeyboardListener
 		if(key == Key.RIGHT)
 		{
 			angleChange += 0.05;
+		}
+
+		if(key == Key.M)
+		{
+			cannon.toggleState();
 		}
 
 		moveY /= (float) Model.TIMER_PERIOD_MS;
