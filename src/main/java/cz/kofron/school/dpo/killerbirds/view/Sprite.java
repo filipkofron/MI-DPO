@@ -13,9 +13,8 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
-import cz.kofron.school.dpo.killerbirds.model.GameObject;
+import cz.kofron.school.dpo.killerbirds.model.objects.GameObject;
 
 /**
  * @author kofee
@@ -129,8 +128,8 @@ public class Sprite extends GLObject
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texId);
 
-		GL20.glUniform2f(offsetLoc, gameObject.getX() / (screenWidth / 2.0f),
-				gameObject.getY() /  (screenHeight / 2.0f));
+		GL20.glUniform2f(offsetLoc, gameObject.getMovementProperty().posX / (screenWidth / 2.0f),
+				gameObject.getMovementProperty().posY /  (screenHeight / 2.0f));
 
 		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, vertexCount);
 
@@ -141,7 +140,7 @@ public class Sprite extends GLObject
 		// Mac OS X has terribly broken OpenGL ..
 		if(MacOSXHelper.isMac())
 		{
-			APPLEVertexArrayObject.glBindVertexArrayAPPLE(0);;
+			APPLEVertexArrayObject.glBindVertexArrayAPPLE(0);
 		}
 		else
 		{
@@ -150,6 +149,4 @@ public class Sprite extends GLObject
 
 		GL20.glUseProgram(0);
 	}
-	
-	
 }

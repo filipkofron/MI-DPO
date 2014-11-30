@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import cz.kofron.school.dpo.killerbirds.view.LwjglUpdateListener;
+import cz.kofron.school.dpo.killerbirds.model.objects.GameObject;
 
 /**
  * Created by kofee on 21.10.14.
  */
 public class ObjectPool implements GameUpdateListener
 {
-	private HashMap<String, ArrayList<GameObject> > gameObjects = new HashMap<>();
+	private HashMap<String, ArrayList<GameObject>> gameObjects = new HashMap<>();
 	private ArrayList<ObjectStateListener> objectStateListeners = new ArrayList<>();
 
 	public void registerObjectStateListener(ObjectStateListener listener)
@@ -39,7 +39,7 @@ public class ObjectPool implements GameUpdateListener
 				gameObjects.put(gameObject.getName(), list);
 			}
 		}
-		for(ObjectStateListener listener : objectStateListeners)
+		for (ObjectStateListener listener : objectStateListeners)
 		{
 			listener.onObjectAdded(gameObject);
 		}
@@ -69,7 +69,7 @@ public class ObjectPool implements GameUpdateListener
 		{
 			list = gameObjects.get(name);
 		}
-		if(list == null)
+		if (list == null)
 		{
 			return new ArrayList<>();
 		}
@@ -87,7 +87,9 @@ public class ObjectPool implements GameUpdateListener
 			{
 				for (GameObject gameObject : gameObjectLists)
 				{
-					if (Math.abs(gameObject.getY()) + Math.abs(gameObject.getX()) > 5000)
+					if (gameObject.getMovementProperty().posX > Model.DEFAULT_WIDTH
+							|| gameObject.getMovementProperty().posX < -Model.DEFAULT_WIDTH
+							|| gameObject.getMovementProperty().posY < -Model.DEFAULT_HEIGHT)
 					{
 						toRemove.add(gameObject);
 					}
@@ -97,7 +99,7 @@ public class ObjectPool implements GameUpdateListener
 			}
 		}
 
-		for(GameObject gameObject : toRemove)
+		for (GameObject gameObject : toRemove)
 		{
 			removeObject(gameObject);
 		}

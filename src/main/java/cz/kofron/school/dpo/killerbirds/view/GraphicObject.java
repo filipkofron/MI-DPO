@@ -1,6 +1,6 @@
 package cz.kofron.school.dpo.killerbirds.view;
 
-import cz.kofron.school.dpo.killerbirds.model.GameObject;
+import cz.kofron.school.dpo.killerbirds.model.objects.GameObject;
 
 /**
  * Added by Filip Kofron on 10.11.14.

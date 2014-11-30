@@ -1,9 +1,12 @@
-package cz.kofron.school.dpo.killerbirds.model;
+package cz.kofron.school.dpo.killerbirds.model.objects.collision;
 
 import java.util.List;
 
 import cz.kofron.school.dpo.killerbirds.KillerBirds;
+import cz.kofron.school.dpo.killerbirds.model.GameUpdateListener;
+import cz.kofron.school.dpo.killerbirds.model.ObjectPool;
 import cz.kofron.school.dpo.killerbirds.model.objects.Collision;
+import cz.kofron.school.dpo.killerbirds.model.objects.GameObject;
 
 /**
  * Added by Filip Kofron on 4.11.14.

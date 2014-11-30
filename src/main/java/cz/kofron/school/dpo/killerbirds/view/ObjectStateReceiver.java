@@ -1,7 +1,7 @@
 package cz.kofron.school.dpo.killerbirds.view;
 
 import cz.kofron.school.dpo.killerbirds.model.ObjectStateListener;
-import cz.kofron.school.dpo.killerbirds.model.GameObject;
+import cz.kofron.school.dpo.killerbirds.model.objects.GameObject;
 
 /**
  * Created by kofee on 21.10.14.

@@ -1,7 +1,8 @@
 package cz.kofron.school.dpo.killerbirds.model.objects;
 
-import cz.kofron.school.dpo.killerbirds.model.GameObject;
-import cz.kofron.school.dpo.killerbirds.model.Model;
+import cz.kofron.school.dpo.killerbirds.model.objects.collision.CollisionProperty;
+import cz.kofron.school.dpo.killerbirds.model.objects.movement.MovementProperty;
+import cz.kofron.school.dpo.killerbirds.model.objects.movement.MovementStrategy;
 
 /**
  * Created by kofee on 21.10.14.
@@ -10,32 +11,14 @@ public class Missile extends GameObject
 {
 	public final static String NAME = "missile";
 
-	private float speedX;
-	private float speedY;
-
-	protected Missile(float x, float y, float speedX, float speedY)
+	public Missile(MovementProperty movementProperty, MovementStrategy movementStrategy)
 	{
-		super(x, y, 20, NAME);
-
-		this.speedX = speedX;
-		this.speedY = speedY;
+		super(new CollisionProperty(20), movementProperty, movementStrategy, NAME);
 	}
 
 	@Override
-	public void update()
+	public void acceptMovementStrategy(MovementStrategy movementStrategy)
 	{
-		float timeConstant = Model.TIMER_PERIOD_MS;
-
-		x += speedX / timeConstant;
-		y += speedY / timeConstant;
-
-		speedX *= 1.0f - (0.05f / timeConstant);
-		speedY *= 1.0f - (0.05f / timeConstant);
-
-		//speedX -= x * 1.0f / timeConstant;
-		//speedY -= y * 1.0f / timeConstant;
-
-		speedX *= 1.0f - (0.1f / timeConstant);
-		speedY -= 20.0f / timeConstant;
+		movementStrategy.visit(this);
 	}
 }

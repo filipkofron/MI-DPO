@@ -1,10 +1,14 @@
 package cz.kofron.school.dpo.killerbirds.model.objects;
 
+import java.util.LinkedList;
 import java.util.Random;
 
 import cz.kofron.school.dpo.killerbirds.KillerBirds;
-import cz.kofron.school.dpo.killerbirds.model.GameObject;
 import cz.kofron.school.dpo.killerbirds.model.Model;
+import cz.kofron.school.dpo.killerbirds.model.objects.collision.CollisionProperty;
+import cz.kofron.school.dpo.killerbirds.model.objects.movement.ManualMovementStrategy;
+import cz.kofron.school.dpo.killerbirds.model.objects.movement.MovementProperty;
+import cz.kofron.school.dpo.killerbirds.model.objects.movement.MovementStrategy;
 
 /**
  * Created by kofee on 21.10.14.
@@ -18,27 +22,35 @@ public class Cannon extends GameObject
 	public final static String NAME = "cannon";
 	public final static int CANNON_OFFSET = 50;
 
-	private float angle = (float) Math.PI / 4.0f;
+	private LinkedList<Float> moveXs = new LinkedList<>(); // movements to be done
+	private LinkedList<Float> moveYs = new LinkedList<>(); // movements to be done
+
+	private static MovementProperty prepareMovement()
+	{
+		MovementProperty movementProperty = new MovementProperty();
+		movementProperty.posX = -Model.DEFAULT_WIDTH / 2 + CANNON_OFFSET;
+		return movementProperty;
+	}
+
+	public LinkedList<Float> getMovementsX()
+	{
+		return moveXs;
+	}
+
+	public LinkedList<Float> getMovementsY()
+	{
+		return moveYs;
+	}
+
+	public synchronized void move(float dx, float dy)
+	{
+		moveXs.add(dx);
+		moveYs.add(dy);
+	}
 
 	public Cannon()
 	{
-		super(-Model.DEFAULT_WIDTH / 2 + CANNON_OFFSET, 0, 20, NAME);
-	}
-
-	@Override
-	public void update()
-	{
-		// nothing has to be updated
-	}
-
-	public float getAngle()
-	{
-		return angle;
-	}
-
-	public void setAngle(float angle)
-	{
-		this.angle = angle;
+		super(new CollisionProperty(20), prepareMovement(), new ManualMovementStrategy(), NAME);
 	}
 
 	public void shoot()
@@ -51,17 +63,22 @@ public class Cannon extends GameObject
 			{
 				lastFire = System.currentTimeMillis();
 
-				float vecX = (float) Math.sin(angle) * 200.0f;
-				float vecY = (float) Math.cos(angle) * 200.0f;
+				float vecX = (float) Math.sin(movementProperty.angle) * 200.0f;
+				float vecY = (float) Math.cos(movementProperty.angle) * 200.0f;
 
 				float speedX = vecX + random.nextInt(50) - 25;
 				float speedY = vecY + random.nextInt(50) - 25;
 
-				Missile missile = KillerBirds.model.getGameObjectFactory().createMissile(x, y,
-						speedX, speedY);
+				Missile missile = KillerBirds.model.getGameObjectFactory().createMissile(movementProperty.posX, movementProperty.posY, movementProperty.speedX + speedX, movementProperty.speedY + speedY);
 
 				KillerBirds.model.getObjectPool().addObject(missile);
 			}
 		}
+	}
+
+	@Override
+	public void acceptMovementStrategy(MovementStrategy movementStrategy)
+	{
+		movementStrategy.visit(this);
 	}
 }

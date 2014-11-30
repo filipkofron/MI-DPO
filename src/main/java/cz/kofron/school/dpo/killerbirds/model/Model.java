@@ -1,8 +1,8 @@
 package cz.kofron.school.dpo.killerbirds.model;
 
-import cz.kofron.school.dpo.killerbirds.controller.Controller;
 import cz.kofron.school.dpo.killerbirds.model.objects.Cannon;
-import cz.kofron.school.dpo.killerbirds.view.View;
+import cz.kofron.school.dpo.killerbirds.model.objects.collision.Collider;
+import cz.kofron.school.dpo.killerbirds.model.objects.collision.CollisionCleaner;
 
 /**
  * @author Filip Kofron
@@ -35,8 +35,10 @@ public class Model
 		{
 			case SIMPLE:
 				gameObjectFactory = new SimpleGameObjectFactory();
+				break;
 			case REALISTIC:
 				gameObjectFactory = new RealisticGameObjectFactory();
+				break;
 			default:
 		}
 	}

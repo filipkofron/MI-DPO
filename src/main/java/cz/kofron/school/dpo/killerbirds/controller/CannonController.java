@@ -1,13 +1,11 @@
 package cz.kofron.school.dpo.killerbirds.controller;
 
 import java.util.List;
-import java.util.Random;
 
 import cz.kofron.school.dpo.killerbirds.KillerBirds;
-import cz.kofron.school.dpo.killerbirds.model.GameObject;
+import cz.kofron.school.dpo.killerbirds.model.objects.GameObject;
 import cz.kofron.school.dpo.killerbirds.model.Model;
 import cz.kofron.school.dpo.killerbirds.model.objects.Cannon;
-import cz.kofron.school.dpo.killerbirds.model.objects.Missile;
 
 /**
  * Created by kofee on 21.10.14.
@@ -59,6 +57,6 @@ public class CannonController implements KeyboardListener
 
 		moveY /= (float) Model.TIMER_PERIOD_MS;
 		cannon.move(0, moveY);
-		cannon.setAngle(cannon.getAngle() + angleChange);
+		cannon.getMovementProperty().angle = cannon.getMovementProperty().angle + angleChange;
 	}
 }

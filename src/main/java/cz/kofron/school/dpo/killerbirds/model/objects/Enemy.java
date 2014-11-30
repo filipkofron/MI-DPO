@@ -1,6 +1,8 @@
 package cz.kofron.school.dpo.killerbirds.model.objects;
 
-import cz.kofron.school.dpo.killerbirds.model.GameObject;
+import cz.kofron.school.dpo.killerbirds.model.objects.collision.CollisionProperty;
+import cz.kofron.school.dpo.killerbirds.model.objects.movement.MovementProperty;
+import cz.kofron.school.dpo.killerbirds.model.objects.movement.MovementStrategy;
 
 /**
  * Added by Filip Kofron on 4.11.14.
@@ -22,14 +24,14 @@ public class Enemy extends GameObject
 		}
 	}
 
-	protected Enemy(float x, float y, EnemyType type)
+	public Enemy(MovementProperty movementProperty, EnemyType type, MovementStrategy movementStrategy)
 	{
-		super(x, y, 20, getTypeString(type));
+		super(new CollisionProperty(20), movementProperty, movementStrategy, getTypeString(type));
 	}
 
 	@Override
-	public void update()
+	public void acceptMovementStrategy(MovementStrategy movementStrategy)
 	{
-
+		movementStrategy.visit(this);
 	}
 }

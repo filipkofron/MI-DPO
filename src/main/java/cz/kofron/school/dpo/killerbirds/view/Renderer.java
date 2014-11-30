@@ -5,8 +5,7 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 
 import cz.kofron.school.dpo.killerbirds.KillerBirds;
-import cz.kofron.school.dpo.killerbirds.model.GameObject;
-import cz.kofron.school.dpo.killerbirds.model.Model;
+import cz.kofron.school.dpo.killerbirds.model.objects.GameObject;
 
 /**
  * Created by kofee on 20/10/14.
