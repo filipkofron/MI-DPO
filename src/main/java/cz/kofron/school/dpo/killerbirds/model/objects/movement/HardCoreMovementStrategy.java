@@ -7,7 +7,7 @@ import cz.kofron.school.dpo.killerbirds.model.objects.GameObject;
 /**
  * Added by Filip Kofron on 29.11.14.
  */
-public class RealisticMovementStrategy extends GravityMovementStrategy
+public class HardCoreMovementStrategy extends GravityMovementStrategy
 {
 	protected void moveByGravity(GameObject gameObject)
 	{

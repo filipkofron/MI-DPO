@@ -1,4 +1,4 @@
-#version 150
+#version 130
 
 varying vec2 var_texCoord;
 uniform sampler2D tex;

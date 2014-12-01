@@ -21,19 +21,19 @@ public class Collider implements GameUpdateListener
 {
 	private class CollisionPair implements Comparable<CollisionPair>
 	{
-		public GameObject a;
-		public GameObject b;
+		public GameObject enemy;
+		public GameObject missile;
 
-		public CollisionPair(GameObject a, GameObject b)
+		public CollisionPair(GameObject enemy, GameObject missile)
 		{
-			this.a = a;
-			this.b = b;
+			this.enemy = enemy;
+			this.missile = missile;
 		}
 
 		@Override
 		public int compareTo(CollisionPair collisionPair)
 		{
-			return a.compareTo(collisionPair.a);
+			return enemy.compareTo(collisionPair.enemy);
 		}
 	}
 
@@ -49,9 +49,7 @@ public class Collider implements GameUpdateListener
 
 		for(GameObject missile : missiles)
 		{
-			enemies.stream().filter(enemy -> missile.collidesWith(enemy)).forEach(enemy -> {
-				collidedObjects.add(new CollisionPair(enemy, missile));
-			});
+			enemies.stream().filter(enemy -> missile.collidesWith(enemy)).forEach(enemy -> collidedObjects.add(new CollisionPair(enemy, missile)));
 		}
 
 		return collidedObjects;
@@ -67,16 +65,16 @@ public class Collider implements GameUpdateListener
 		for(CollisionPair pair : collisions)
 		{
 			MovementProperty movementProperty = new MovementProperty();
-			movementProperty.posX = pair.a.getMovementProperty().posX;
-			movementProperty.posY = pair.a.getMovementProperty().posY;
-			movementProperty.speedX = 2.0f * pair.b.getMovementProperty().speedX - pair.a.getMovementProperty().speedX;
-			movementProperty.speedY = 2.0f * pair.b.getMovementProperty().speedY - pair.a.getMovementProperty().speedY;
+			movementProperty.posX = pair.enemy.getMovementProperty().posX;
+			movementProperty.posY = pair.enemy.getMovementProperty().posY;
+			movementProperty.speedX = 2.0f * pair.missile.getMovementProperty().speedX - pair.enemy.getMovementProperty().speedX;
+			movementProperty.speedY = 2.0f * pair.missile.getMovementProperty().speedY - pair.enemy.getMovementProperty().speedY;
 
 			objectPool.addObject(
 						KillerBirds.model.getGameObjectFactory().createCollision(
 								movementProperty));
-			objectPool.removeObject(pair.a);
-			objectPool.removeObject(pair.b);
+			objectPool.removeObject(pair.enemy);
+			objectPool.removeObject(pair.missile);
 		}
 	}
 }

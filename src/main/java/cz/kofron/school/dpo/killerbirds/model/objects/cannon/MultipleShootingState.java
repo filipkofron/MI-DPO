@@ -12,7 +12,7 @@ import cz.kofron.school.dpo.killerbirds.model.objects.movement.MovementProperty;
 public class MultipleShootingState extends ShootingState
 {
 	private long lastFire = 0;
-	private final static int FIRE_PERIOD_MS = 30;
+	private final int FIRE_PERIOD_MS = KillerBirds.model.getSettings().getCannonMultipleShootPeriod();
 	private Random random = new Random();
 
 	@Override
@@ -22,10 +22,10 @@ public class MultipleShootingState extends ShootingState
 
 		if (timeDiff > FIRE_PERIOD_MS)
 		{
-			for (int i = 0; i < 3; i++)
-			{
-				lastFire = System.currentTimeMillis();
 
+			lastFire = System.currentTimeMillis();
+			for (int i = 0; i < KillerBirds.model.getSettings().getCannonMultipleShootAmount(); i++)
+			{
 				float vecX = (float) Math.sin(movementProperty.angle) * 200.0f;
 				float vecY = (float) Math.cos(movementProperty.angle) * 200.0f;
 

@@ -95,10 +95,20 @@ public abstract class GameObject implements Comparable
 		return 0;
 	}
 
+	public MovementStrategy getMovementStrategy()
+	{
+		return movementStrategy;
+	}
+
 	public abstract void acceptMovementStrategy(MovementStrategy movementStrategy);
 
 	public long getTimeCreated()
 	{
 		return timeCreated;
+	}
+
+	public void onDespawned()
+	{
+		// not needed to override
 	}
 }

@@ -9,21 +9,27 @@ import cz.kofron.school.dpo.killerbirds.model.objects.GameObject;
  */
 public class SimpleMovementStrategyStrategy extends GravityMovementStrategy
 {
+	private static MovementProperty movementProperty = new MovementProperty();
+
 	protected void moveByGravity(GameObject gameObject)
 	{
-		float timeDelta = 1.0f / Model.TIMER_PERIOD_MS;
+		synchronized (movementProperty)
+		{
+			float timeDelta = 1.0f / Model.TIMER_PERIOD_MS;
 
-		MovementProperty movementProperty = new MovementProperty();
-		MovementProperty objProp = gameObject.getMovementProperty();
+			MovementProperty objProp = gameObject.getMovementProperty();
 
+			movementProperty.reset();
 
-		movementProperty.posX = objProp.posX + objProp.speedX * timeDelta * 1.0f;
-		movementProperty.posY = objProp.posY + objProp.speedY * timeDelta * 1.0f;
+			movementProperty.posX = objProp.posX + objProp.speedX * timeDelta * 1.0f;
+			movementProperty.posY = objProp.posY + objProp.speedY * timeDelta * 1.0f;
 
-		movementProperty.speedX = objProp.speedX;
-		movementProperty.speedY = objProp.speedY - timeDelta * 40.0f;
+			movementProperty.speedX = objProp.speedX;
+			movementProperty.speedY = objProp.speedY - timeDelta * 40.0f;
 
-		gameObject.setMovementProperty(movementProperty);
+			objProp.setFrom(movementProperty);
+			gameObject.setMovementProperty(objProp);
+		}
 	}
 
 	@Override

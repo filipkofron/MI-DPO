@@ -5,12 +5,12 @@ import cz.kofron.school.dpo.killerbirds.model.objects.Enemy;
 import cz.kofron.school.dpo.killerbirds.model.objects.EnemyType;
 import cz.kofron.school.dpo.killerbirds.model.objects.Missile;
 import cz.kofron.school.dpo.killerbirds.model.objects.movement.MovementProperty;
-import cz.kofron.school.dpo.killerbirds.model.objects.movement.RealisticMovementStrategy;
+import cz.kofron.school.dpo.killerbirds.model.objects.movement.HardCoreMovementStrategy;
 
 /**
  * Added by Filip Kofron on 4.11.14.
  */
-public class RealisticGameObjectFactory extends AbstractGameObjectFactory
+public class HardCoreGameObjectFactory extends AbstractGameObjectFactory
 {
 	@Override
 	public Enemy createEnemy(float x, float y, EnemyType type)
@@ -18,7 +18,7 @@ public class RealisticGameObjectFactory extends AbstractGameObjectFactory
 		MovementProperty movementProperty = new MovementProperty();
 		movementProperty.posX = x;
 		movementProperty.posY = y;
-		return new Enemy(movementProperty, type, new RealisticMovementStrategy());
+		return new Enemy(movementProperty, type, new HardCoreMovementStrategy());
 	}
 
 	@Override
@@ -29,12 +29,12 @@ public class RealisticGameObjectFactory extends AbstractGameObjectFactory
 		movementProperty.posY = y;
 		movementProperty.speedX = speedX;
 		movementProperty.speedY = speedY;
-		return new Missile(movementProperty, new RealisticMovementStrategy());
+		return new Missile(movementProperty, new HardCoreMovementStrategy());
 	}
 
 	@Override
 	public Collision createCollision(MovementProperty movementProperty)
 	{
-		return new Collision(movementProperty, new RealisticMovementStrategy());
+		return new Collision(movementProperty, new HardCoreMovementStrategy());
 	}
 }

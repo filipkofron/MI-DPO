@@ -27,7 +27,6 @@ public class GameTimer
 
 	private class ThreadRunner implements Runnable
 	{
-
 		@Override
 		public void run()
 		{
@@ -41,10 +40,7 @@ public class GameTimer
 					Logger.getLogger(GameTimer.class.getName()).log(Level.SEVERE, null, ex);
 				}
 
-				runnables.stream().forEach((runnable) ->
-				{
-					runnable.onUpdate();
-				});
+				runnables.stream().forEach(GameUpdateListener::onUpdate);
 			}
 		}
 	}

@@ -67,4 +67,10 @@ public class Cannon extends GameObject
 	{
 		movementStrategy.visit(this);
 	}
+
+	@Override
+	public void onDespawned()
+	{
+		KillerBirds.model.getObjectPool().addObject(new Cannon());
+	}
 }

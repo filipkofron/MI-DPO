@@ -11,6 +11,15 @@ public class MovementProperty
 	public float speedY = 0;
 	public float angle = (float) Math.PI / 4.0f;
 
+	public void reset()
+	{
+		posX = 0;
+		posY = 0;
+		speedX = 0;
+		speedY = 0;
+		angle = (float) Math.PI / 4.0f;
+	}
+
 	public MovementProperty()
 	{
 	}
@@ -25,6 +34,15 @@ public class MovementProperty
 	}
 
 	public MovementProperty(MovementProperty movementProperty)
+	{
+		posX = movementProperty.posX;
+		posY = movementProperty.posY;
+		speedX = movementProperty.speedX;
+		speedY = movementProperty.speedY;
+		angle = movementProperty.angle;
+	}
+
+	public void setFrom(MovementProperty movementProperty)
 	{
 		posX = movementProperty.posX;
 		posY = movementProperty.posY;

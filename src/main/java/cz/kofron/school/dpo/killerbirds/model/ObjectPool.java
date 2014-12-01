@@ -53,6 +53,7 @@ public class ObjectPool implements GameUpdateListener
 			list = gameObjects.get(gameObject.getName());
 			if (list != null)
 			{
+				gameObject.onDespawned();
 				list.remove(gameObject);
 				for (ObjectStateListener listener : objectStateListeners)
 				{

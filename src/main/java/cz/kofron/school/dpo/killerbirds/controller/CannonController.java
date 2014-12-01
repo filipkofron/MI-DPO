@@ -15,53 +15,47 @@ public class CannonController implements KeyboardListener
 	@Override
 	public void onPressed(Key key)
 	{
-		float moveY = 0.0f;
-		float angleChange = 0.0f;
+		List<GameObject> resultCannons = KillerBirds.model.getObjectPool().getObjectsByName("cannon");
 
-		List<GameObject> resultCannon = KillerBirds.model.getObjectPool().getObjectsByName("cannon");
-
-		Cannon cannon = null;
-		if(resultCannon.size() > 0)
+		for(GameObject gameObjectCannon : resultCannons)
 		{
-			cannon = (Cannon) resultCannon.get(0);
-		}
-		else
-		{
-			return;
-		}
+			float moveY = 0.0f;
+			float angleChange = 0.0f;
+			Cannon cannon = (Cannon) gameObjectCannon; // we know it's cannon
 
-		if(key == Key.UP)
-		{
-			moveY += 100.0f;
-		}
+			if (key == Key.UP)
+			{
+				moveY += 100.0f;
+			}
 
-		if(key == Key.DOWN)
-		{
-			moveY -= 100.0f;
-		}
+			if (key == Key.DOWN)
+			{
+				moveY -= 100.0f;
+			}
 
-		if(key == Key.SPACE)
-		{
-			cannon.shoot();
-		}
+			if (key == Key.SPACE)
+			{
+				cannon.shoot();
+			}
 
-		if(key == Key.LEFT)
-		{
-			angleChange -= 0.05;
-		}
+			if (key == Key.LEFT)
+			{
+				angleChange -= 0.05;
+			}
 
-		if(key == Key.RIGHT)
-		{
-			angleChange += 0.05;
-		}
+			if (key == Key.RIGHT)
+			{
+				angleChange += 0.05;
+			}
 
-		if(key == Key.M)
-		{
-			cannon.toggleState();
-		}
+			if (key == Key.M)
+			{
+				cannon.toggleState();
+			}
 
-		moveY /= (float) Model.TIMER_PERIOD_MS;
-		cannon.move(0, moveY);
-		cannon.getMovementProperty().angle = cannon.getMovementProperty().angle + angleChange;
+			moveY /= (float) Model.TIMER_PERIOD_MS;
+			cannon.move(0, moveY);
+			cannon.getMovementProperty().angle = cannon.getMovementProperty().angle + angleChange;
+		}
 	}
 }

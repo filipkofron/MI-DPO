@@ -12,7 +12,7 @@ import cz.kofron.school.dpo.killerbirds.model.objects.movement.MovementProperty;
 public class SingleShootingState extends ShootingState
 {
 	private long lastFire = 0;
-	private final static int FIRE_PERIOD_MS = 500;
+	private final int FIRE_PERIOD_MS = KillerBirds.model.getSettings().getCannonSingleShootPeriod();
 	private Random random = new Random();
 
 	@Override
@@ -24,15 +24,18 @@ public class SingleShootingState extends ShootingState
 		{
 			lastFire = System.currentTimeMillis();
 
-			float vecX = (float) Math.sin(movementProperty.angle) * 200.0f;
-			float vecY = (float) Math.cos(movementProperty.angle) * 200.0f;
+			for(int i = 0; i < KillerBirds.model.getSettings().getCannonSingleShootAmount(); i++)
+			{
+				float vecX = (float) Math.sin(movementProperty.angle) * 200.0f;
+				float vecY = (float) Math.cos(movementProperty.angle) * 200.0f;
 
-			float speedX = vecX + random.nextInt(50) - 25;
-			float speedY = vecY + random.nextInt(50) - 25;
+				float speedX = vecX + random.nextInt(50) - 25;
+				float speedY = vecY + random.nextInt(50) - 25;
 
-			Missile missile = KillerBirds.model.getGameObjectFactory().createMissile(movementProperty.posX, movementProperty.posY, movementProperty.speedX + speedX, movementProperty.speedY + speedY);
+				Missile missile = KillerBirds.model.getGameObjectFactory().createMissile(movementProperty.posX, movementProperty.posY, movementProperty.speedX + speedX, movementProperty.speedY + speedY);
 
-			KillerBirds.model.getObjectPool().addObject(missile);
+				KillerBirds.model.getObjectPool().addObject(missile);
+			}
 		}
 	}
 

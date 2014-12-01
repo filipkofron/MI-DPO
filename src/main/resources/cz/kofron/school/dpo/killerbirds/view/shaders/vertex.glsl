@@ -1,4 +1,4 @@
-#version 150
+#version 130
 
 //the position of the vertex as specified by our renderer
 attribute vec3 in_vertex;
